@@ -41,36 +41,44 @@ registered_users = dict(
 
 # Kontrola registrace uživatele
 user_name = input("Enter your username: ")
-user_password = input("Enter your password: ")
 
 if user_name in registered_users:
-    print("username:", user_name,
-        "\npassword:", user_password,
-        "\n" + "-" * 41,
-        "\nWelcome to the app,", user_name,
-        "\nWe have 3 texts to be analyzed.",
-        "\n" + "-" * 41,
-    )
+    user_password = input("Enter your password: ")
+    if registered_users.get(user_name) == user_password:
+        print("username:", user_name,
+            "\npassword:", user_password,
+            "\n" + "-" * 41,
+            "\nWelcome to the app,", user_name,
+            "\nWe have 3 texts to be analyzed.",
+            "\n" + "-" * 41,
+            )
+    else:
+        print("username:", user_name,
+            "\npassword:", user_password,
+            "\nwrong password, terminating the program.."
+            )
+        exit()
 else:
-    print("username:", user_name,
-        "\npassword:", user_password,
+    print("username:", user_name,       
         "\nunregistered user, terminating the program..")
     exit()
 
 # Výběr textu
-text_choice = input("Enter a number btw. 1 and 3 to select: ")
-if text_choice.isalpha():
-    print("Invalid character. Please enter A NUMBER within the range.")
-    exit()
+try:
+    text_choice = int(input("Enter a number btw. 1 and 3 to select: "))
+    0 < text_choice < 4   
+except ValueError:
+    print("Invalid input. Enter A NUMBER within the range.")
+    exit()    
 else:
-    text_choice = int(text_choice) - 1 
+    text_choice -= 1 
     if text_choice in range(len(TEXTS)):
         text_choice = TEXTS[text_choice] 
     else: 
         print("Number out of range")
-        exit()
+        exit()          
 
-# Počet slov
+# # Počet slov
 text_list = text_choice.replace(",", " ").replace(".", " ").split()
 title_case_words = 0
 upper_case_words = 0
@@ -82,7 +90,7 @@ for word in text_list:
     if word.istitle(): 
         title_case_words += 1
 
-# Do isupper se propisují dvě slova US a 30N, aby seděl počet dle výsledků eliminoval jsem slovo 30N
+# # Do isupper se propisují dvě slova US a 30N, aby seděl počet dle výsledků eliminoval jsem slovo 30N
 for word in text_list:
     if word.isupper() and word.isalpha(): 
         upper_case_words += 1
