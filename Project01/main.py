@@ -11,7 +11,7 @@ topographic feature that rises sharply
 some 1000 feet above Twin Creek Valley
 to an elevation of more than 7500 feet
 above sea level. The butte is located just
-north of US 30N and the Union Pacific Railroad,
+north of US 30 and the Union Pacific Railroad,
 which traverse the valley. ''',
 '''At the base of Fossil Butte are the bright
 red, purple, yellow and gray beds of the Wasatch
@@ -49,7 +49,7 @@ if user_name in registered_users:
             "\npassword:", user_password,
             "\n" + "-" * 41,
             "\nWelcome to the app,", user_name,
-            "\nWe have 3 texts to be analyzed.",
+            "\nWe have", len(TEXTS), "texts to be analyzed.",
             "\n" + "-" * 41,
             )
     else:
@@ -65,8 +65,8 @@ else:
 
 # Výběr textu
 try:
-    text_choice = int(input("Enter a number btw. 1 and 3 to select: "))
-    0 < text_choice < 4   
+    text_choice = int(input(f"Enter a number btw. 1 and {len(TEXTS)} to select: "))
+    0 < text_choice <= len(TEXTS)   
 except ValueError:
     print("Invalid input. Enter A NUMBER within the range.")
     exit()    
@@ -85,24 +85,20 @@ upper_case_words = 0
 lower_case_words = 0 
 numeric = 0
 numeric_count = 0
+word_length_list = []
 
 for word in text_list:
-    if word.istitle(): 
-        title_case_words += 1
-
-# # Do isupper se propisují dvě slova US a 30N, aby seděl počet dle výsledků eliminoval jsem slovo 30N
-for word in text_list:
-    if word.isupper() and word.isalpha(): 
+    if word.isupper(): 
         upper_case_words += 1
-
-for word in text_list:
-    if word.islower(): 
+    elif word.istitle(): 
+        title_case_words += 1    
+    elif word.islower(): 
         lower_case_words += 1
-
-for word in text_list:
-    if word.isnumeric(): 
+    elif word.isnumeric(): 
         numeric += 1
         numeric_count += int(word)
+
+    word_length_list.append(len(word))
 
 print("-" * 41)
 print(f"There are {len(text_list)} words in the selected text.")
@@ -114,11 +110,6 @@ print(f"The sum of all the numbers {numeric_count}")
 print("-" * 41)
 
 # Délka slov
-word_length_list = []
-
-for word in text_list:
-    word_length_list.append(len(word))
-
 print("LEN|     OCCURENCES     |NR.")
 print("-" * 41)
 
